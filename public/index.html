@@ -68,7 +68,7 @@ footer span{cursor:pointer;opacity:.4}
 <section id="hero">
   <h1 id="hName">DraventhHardcore</h1>
   <p id="hTag"></p>
-  <div><a class="btn" href="#about">Jelajahi ⚔</a> <a class="btn g" href="#rules">Baca Rules</a> <button class="btn g" id="cip" hidden></button></div><div style="color:var(--mut);margin-top:1rem;font-size:.85rem">🟢 Server Online &amp; Ready</div>
+  <div><a class="btn" href="#about">Jelajahi ⚔</a> <a class="btn g" href="#rules">Baca Rules</a> <button class="btn g" id="cip" hidden></button></div><div id="live" style="color:var(--mut);margin-top:1rem;font-size:.9rem;min-height:1.4em"></div>
   <div class="stats" id="stats"></div>
 </section>
 
@@ -117,25 +117,30 @@ footer span{cursor:pointer;opacity:.4}
 const $=s=>document.querySelector(s);let CR=null;
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const lines=t=>t.split("\n").map(s=>s.trim()).filter(Boolean);
-let D;
+let D,LIVE,TT;
+const LN=()=>new Set(((LIVE&&LIVE.players&&LIVE.players.list)||[]).map(x=>(x.name_clean||x.name||"").toLowerCase()));
+const eff=p=>{const v=st(p)=="Void"?"Void":"Offline";return LIVE===undefined?st(p):(LIVE&&LIVE.online&&LN().has(p.name.toLowerCase()))?"Online":v};
+function AL(){const reg=new Set(D.players.map(p=>p.name.toLowerCase()));const l=(LIVE&&LIVE.online&&LIVE.players&&LIVE.players.list)||[];return D.players.concat(l.map(x=>x.name_clean||x.name).filter(n=>n&&!reg.has(n.toLowerCase())).map(n=>({name:n,role:"Pemain",status:"Online"})))}
+function ui(){const e=$("#live");e.textContent=!D.ip?"":LIVE===undefined?"⏳ Mengecek server...":LIVE===null?"⚪ Status server tidak tersedia":LIVE.online?`🟢 Server Online · ${(LIVE.players&&LIVE.players.online)||0}/${(LIVE.players&&LIVE.players.max)||"?"} pemain`:"🔴 Server Offline"}
+async function poll(){if(!D.ip){LIVE=undefined;render();return}try{const r=await fetch("https://api.mcstatus.io/v2/status/java/"+encodeURIComponent(D.ip));LIVE=r.ok?await r.json():null}catch(e){LIVE=null}render()}
 async function load(){
   try{D=await (await fetch("data.json",{cache:"no-store"})).json()}catch(e){D={name:"DraventhHardcore",tagline:"data.json tidak ditemukan",desc:"",rules:[],bans:[],features:[],social:{},closing:"",players:[]}}
   try{const r=await fetch("/api/data",{cache:"no-store"});if(r.ok){const x=await r.json();if(x&&x.name)D=x}}catch(e){}
-  render();
+  render();poll();setInterval(poll,30000);
 }
 function render(){
   document.title=D.name+" ⚔";
   $("#hName").textContent=D.name;$("#fName").textContent=D.name;$("#yr").textContent=new Date().getFullYear();
   $("#aDesc").textContent=D.desc;$("#close").textContent=D.closing;
-  type($("#hTag"),D.tagline);
-  $("#stats").innerHTML=[["6 MENIT","Waktu bangkit"],[D.players.length,"Total Pemain"],[D.players.filter(p=>p.status=="Online").length,"Online"],[D.players.filter(p=>p.status=="Void").length,"Di Kehampaan"]].map(a=>`<div class="stat"><b>${esc(a[0])}</b><span>${esc(a[1])}</span></div>`).join("");
+  if(TT!=D.tagline){TT=D.tagline;type($("#hTag"),D.tagline)}
+  $("#stats").innerHTML=[["6 MENIT","Waktu bangkit"],[AL().length,"Total Pemain"],[AL().filter(p=>eff(p)=="Online").length,"Online"],[AL().filter(p=>eff(p)=="Void").length,"Di Kehampaan"]].map(a=>`<div class="stat"><b>${esc(a[0])}</b><span>${esc(a[1])}</span></div>`).join("");
   $("#fList").innerHTML=D.features.map(f=>`<div class="card"><i>⟡</i>${esc(f)}</div>`).join("");
   $("#rList").innerHTML=D.rules.map(r=>`<div class="rule"><em>➥</em>${esc(r)}</div>`).join("");
   $("#bList").innerHTML=D.bans.map(b=>`<div class="warn">⚠ ${esc(b)}</div>`).join("");
   const s=D.social||{};
   $("#sList").innerHTML=[["Website",s.website],["Instagram",s.instagram],["Tiktok",s.tiktok]].map(a=>`<p><b>${a[0]}:</b> ${a[0]=="Website"&&a[1]&&a[1]!="-"?`<a href="https://${esc(a[1].replace(/^https?:\/\//,""))}" target="_blank" rel="noopener">${esc(a[1])}</a>`:esc(a[1]||"-")}</p>`).join("");
   const c=$("#cip");c.hidden=!D.ip;c.textContent="📋 "+(D.ip||"");c.onclick=()=>{navigator.clipboard?.writeText(D.ip);toast("IP berhasil disalin!")};
-  players();
+  ui();players();
 }
 function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2000)}
 let F="Semua";
@@ -143,8 +148,8 @@ function chips(){$("#chips").innerHTML=["Semua","Online","Void","Offline"].map(x
 const st=p=>p.status=="Mati"?"Void":p.status=="Hidup"?"Online":["Online","Void","Offline"].includes(p.status)?p.status:"Offline";
 function players(){
   const q=$("#q").value.toLowerCase();
-  chips();const l=D.players.filter(p=>p.name.toLowerCase().includes(q)&&(F=="Semua"||st(p)==F));
-  $("#pList").innerHTML=l.length?l.map(p=>`<div class="card pl"><div class="av">${esc(p.name[0]||"?").toUpperCase()}</div><div><b>${esc(p.name)}</b><small>${esc(p.role)}</small></div><span class="tag ${st(p)}">${{Online:"● Online",Void:"☠ In Void",Offline:"○ Offline"}[st(p)]}</span></div>`).join(""):'<p style="color:var(--mut)">Belum ada pemain.</p>';
+  chips();const l=AL().filter(p=>p.name.toLowerCase().includes(q)&&(F=="Semua"||eff(p)==F));
+  $("#pList").innerHTML=l.length?l.map(p=>`<div class="card pl"><div class="av">${esc(p.name[0]||"?").toUpperCase()}</div><div><b>${esc(p.name)}</b><small>${esc(p.role)}</small></div><span class="tag ${eff(p)}">${{Online:"● Online",Void:"☠ In Void",Offline:"○ Offline"}[eff(p)]}</span></div>`).join(""):'<p style="color:var(--mut)">Belum ada pemain.</p>';
 }
 $("#q").oninput=players;
 let tt;function type(el,t){clearInterval(tt);el.textContent="";let i=0;tt=setInterval(()=>{el.textContent=t.slice(0,++i);if(i>=t.length)clearInterval(tt)},35)}
@@ -195,7 +200,7 @@ function collect(){
 }
 const say=t=>{$("#msg").textContent=t;setTimeout(()=>$("#msg").textContent="",3500)};
 $("#save").onclick=async()=>{const d=collect();let r;try{r=await fetch("/api/data",{method:"POST",body:JSON.stringify({u:CR.u,p:CR.p,data:d})})}catch(e){}
-if(r&&r.ok){D=d;render();say("✔ Tersimpan untuk semua pengunjung")}else say("Gagal menyimpan ke server")};
+if(r&&r.ok){D=d;poll();say("✔ Tersimpan untuk semua pengunjung")}else say("Gagal menyimpan ke server")};
 $("#exp").onclick=()=>{D=collect();const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(D,null,2)],{type:"application/json"}));a.download="data.json";a.click();say("data.json terunduh, ganti di project lalu deploy")};
 $("#imp").onclick=()=>$("#file").click();
 $("#file").onchange=async e=>{try{const d=JSON.parse(await e.target.files[0].text());if(!d.name)throw 0;D=d;render();showPanel();say("Import berhasil, klik Simpan")}catch(x){say("File tidak valid")}};
@@ -204,5 +209,5 @@ $("#out").onclick=()=>{CR=null;$("#panel").hidden=true;$("#login").hidden=false;
 load();
 </script>
 </body>
-  </html>
-  
+</html>
+            
