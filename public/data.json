@@ -1,0 +1,14 @@
+{
+  "name": "DraventhHardcore",
+  "ip": "",
+  "tagline": "Bertahan hidup. Atau terlempar ke kehampaan.",
+  "desc": "DraventhHardcore adalah server bertema hardcore yang mengharuskan pemainnya bertahan hidup. Jika mati, mereka akan terlempar ke dalam kehampaan dan akan bangkit dalam 6 menit. Pemain dapat melakukan apapun selagi mematuhi batasan. Monopoli, manipulasi, omong kosong, dan kebohongan boleh dilakukan selama masuk ke dalam roleplay yang sedang berjalan. Dalam server ini semua berjalan tanpa adanya script.",
+  "rules": ["NO RUSUH", "NO BUNUH TANPA RP", "WAJIB GUNAKAN VOICE CHAT", "NO PORNO", "NO PEDO", "NO JUDGE OOC", "NO X-RAY", "NO CHEAT", "NO CLIENT CHEAT", "NO DUPE"],
+  "bans": ["Pemain tidak boleh menyimpan Ancient Debris dan Nethrite Scrap ke dalam furnace. Jika melanggar akan terkena peringatan / banned / kill character.", "Pemain tidak boleh menggunakan texture/mod yang dapat membantu survival, contoh: Glow Ore Texture, Xaero's Map, dll."],
+  "features": ["Random Teleport", "Disable Chat", "Voice Chat", "DeathDimension", "Trading Player", "Head Sit (request duduk di kepala)", "VeinMiner", "Htreecapitator (pohon langsung hancur)"],
+  "social": {"website": "draventh-hc.netlify.app", "instagram": "-", "tiktok": "-"},
+  "closing": "Saya selaku owner DraventhHC berterima kasih kepada kalian yang telah membaca aturan. Saya harap kalian semua dapat mematuhi aturan, dan jika ada yang tidak mematuhinya, saya harap ada yang akan melaporkannya.",
+  "players": [
+    {"name": "EMONDRAVENTH001", "role": "Owner", "status": "Online"}
+  ]
+}
