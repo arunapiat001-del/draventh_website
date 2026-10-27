@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>DraventhHardcore</title>
+<meta name="description" content="Server Minecraft hardcore roleplay tanpa script.">
+<meta name="theme-color" content="#0a0508">
+<style>
+:root{--bg:#0a0508;--card:#16090f;--line:#3a1420;--red:#ff2a4d;--gold:#ffb347;--tx:#f3e9ec;--mut:#a38b93}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,Segoe UI,sans-serif;overflow-x:hidden;padding-bottom:env(safe-area-inset-bottom)}
+#fx{position:fixed;inset:0;z-index:-1;width:100%;height:100%}
+nav{position:sticky;top:0;z-index:20;display:flex;gap:.3rem;justify-content:center;flex-wrap:wrap;padding:.7rem;background:#0a0508cc;backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+nav a{color:var(--mut);text-decoration:none;padding:.3rem .8rem;border-radius:99px;font-size:.9rem;transition:.2s}
+nav a:hover{color:#fff;background:var(--line)}
+section{max-width:1000px;margin:auto;padding:4.5rem 1.2rem 1rem}
+h2{font-size:clamp(1.6rem,5vw,2.3rem);margin-bottom:1.2rem;background:linear-gradient(90deg,var(--red),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block}
+#hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding-top:2rem}
+#hero h1{font-size:clamp(2.2rem,10vw,5.5rem);line-height:1.05;font-weight:900;letter-spacing:-.02em;background:linear-gradient(120deg,#fff,var(--red) 50%,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent;animation:glow 3s ease-in-out infinite alternate}
+@keyframes glow{to{filter:drop-shadow(0 0 22px #ff2a4d88)}}
+#hero p{color:var(--mut);margin:1.2rem 0 2rem;font-size:clamp(1rem,3vw,1.3rem);min-height:2em}
+.btn{display:inline-block;border:0;cursor:pointer;color:#fff;background:linear-gradient(135deg,var(--red),#a3112d);padding:.8rem 1.6rem;border-radius:12px;font:600 1rem inherit;text-decoration:none;transition:.2s;box-shadow:0 6px 24px #ff2a4d44}
+.btn:hover{transform:translateY(-3px) scale(1.03)}
+.btn.g{background:transparent;border:1px solid var(--line);box-shadow:none}
+.stats{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:2.5rem}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:.8rem 1.4rem}
+.stat b{display:block;font-size:1.6rem;color:var(--gold)}
+.stat span{color:var(--mut);font-size:.8rem}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:1rem}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.2rem;transition:.25s}
+.card:hover{transform:translateY(-6px);border-color:var(--red);box-shadow:0 10px 30px #ff2a4d22}
+.card i{font-style:normal;color:var(--gold);margin-right:.4rem}
+.rule{display:flex;gap:.7rem;align-items:center;padding:.7rem 1rem;background:var(--card);border-left:3px solid var(--red);border-radius:8px;font-weight:600;font-size:.92rem}
+.rule em{color:var(--red);font-style:normal}
+.warn{border:1px solid var(--gold);background:#ffb34710;border-radius:14px;padding:1rem 1.2rem;margin-top:1rem;color:#ffd9a0}
+.rv{opacity:0;transform:translateY(30px);transition:.7s}
+.rv.on{opacity:1;transform:none}
+input,textarea,select{width:100%;background:#0d0609;color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:.65rem .8rem;font:inherit;margin:.25rem 0 .8rem}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--red)}
+#q{max-width:360px}
+.pl{display:flex;align-items:center;gap:.8rem}
+.av{width:42px;height:42px;border-radius:10px;background:linear-gradient(135deg,var(--red),var(--gold));display:grid;place-items:center;font-weight:800;color:#000;flex:none}
+.pl small{color:var(--mut);display:block}
+.tag{margin-left:auto;font-size:.72rem;padding:.15rem .6rem;border-radius:99px;border:1px solid;white-space:nowrap}
+.Online{color:#5dffa0}.Void{color:#b48cff}.Offline{color:var(--mut)}.chips{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:1rem}.chip{border:1px solid var(--line);background:var(--card);color:var(--mut);padding:.3rem .9rem;border-radius:99px;cursor:pointer;font:inherit;font-size:.85rem}.chip.on{background:var(--red);color:#fff;border-color:var(--red)}.t{display:none}.t.on{display:block}#toast{position:fixed;left:50%;bottom:calc(1.5rem + env(safe-area-inset-bottom));transform:translateX(-50%);background:#16090f;border:1px solid var(--gold);padding:.6rem 1.2rem;border-radius:99px;z-index:99;opacity:0;pointer-events:none;transition:.3s}#toast.on{opacity:1}
+.soc a{color:var(--gold)}
+.copy{color:var(--mut);cursor:pointer}
+footer{text-align:center;color:var(--mut);padding:3rem 1rem 2rem;font-size:.85rem}
+footer span{cursor:pointer;opacity:.4}
+#adm{position:fixed;inset:0;z-index:50;background:#0a0508f2;overflow-y:auto;padding:1rem;padding-top:calc(1rem + env(safe-area-inset-top));display:none}
+#adm .box{max-width:720px;margin:auto;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:1.2rem}
+#adm h3{margin:1rem 0 .3rem;color:var(--gold)}
+.row{display:grid;grid-template-columns:1.4fr 1fr 1fr auto;gap:.4rem}
+.row input,.row select{margin:.2rem 0}
+.bar{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+.bar .btn{padding:.6rem 1rem;font-size:.9rem}
+#msg{color:#5dffa0;min-height:1.4em;margin-top:.5rem}
+@media(max-width:560px){.row{grid-template-columns:1fr 1fr}.row input:first-child{grid-column:1/-1}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<nav><a href="#hero">Beranda</a><a href="#about">Tentang</a><a href="#fitur">Fitur</a><a href="#rules">Rules</a><a href="#players">Pemain</a><a href="#sosmed">Sosmed</a><a href="#admin" id="navA">⚙ Admin</a></nav><div id="toast"></div>
+
+<section id="hero">
+  <h1 id="hName">DraventhHardcore</h1>
+  <p id="hTag"></p>
+  <div><a class="btn" href="#about">Jelajahi ⚔</a> <a class="btn g" href="#rules">Baca Rules</a> <button class="btn g" id="cip" hidden></button></div><div style="color:var(--mut);margin-top:1rem;font-size:.85rem">🟢 Server Online &amp; Ready</div>
+  <div class="stats" id="stats"></div>
+</section>
+
+<section id="about" class="rv"><h2>Tentang Server</h2><div class="card"><p id="aDesc"></p></div></section>
+<section id="fitur" class="rv"><h2>Fitur DraventhHC</h2><div class="grid" id="fList"></div></section>
+<section id="rules" class="rv"><h2>Rules DraventhHC</h2><div class="grid" id="rList"></div><div id="bList"></div></section>
+<section id="players" class="rv"><h2>Daftar Pemain</h2><input id="q" placeholder="🔍 Cari pemain..."><div class="chips" id="chips"></div><div class="grid" id="pList"></div></section>
+<section id="sosmed" class="rv"><h2>Social Media</h2><div class="card soc" id="sList"></div><p id="close" style="margin-top:1.5rem;color:var(--mut);text-align:center;font-style:italic"></p></section>
+<footer>© <span id="yr"></span> <b id="fName"></b> <span id="gear" title="Admin">⚙</span></footer>
+
+<div id="adm"><div class="box">
+  <div id="login">
+    <h3>🔐 Admin Login</h3>
+    <label>Username<input id="u" autocomplete="off" autocapitalize="off"></label>
+    <label>Password<input id="p" type="password" autocomplete="off"></label>
+    <div class="bar"><button class="btn" id="go">Masuk</button><button class="btn g" id="x1">Tutup</button></div>
+    <div id="lerr" style="color:#ff6b81;margin-top:.6rem"></div>
+  </div>
+  <div id="panel" hidden>
+    <h3 style="margin-top:0">⚙ Admin Panel</h3><div class="chips" id="tabs"><button class="chip" data-i="0">Info</button><button class="chip" data-i="1">Rules &amp; Fitur</button><button class="chip" data-i="2">Sosmed</button><button class="chip" data-i="3">Pemain</button></div><div class="t" data-t="0"><label>IP Server (opsional)<input id="eIp" placeholder="play.contoh.net"></label>
+    <label>Nama Server<input id="eName"></label>
+    <label>Tagline<input id="eTag"></label>
+    <label>Deskripsi<textarea id="eDesc" rows="5"></textarea></label>
+    </div><div class="t" data-t="1"><label>Fitur (1 baris = 1 fitur)<textarea id="eFeat" rows="6"></textarea></label>
+    <label>Rules (1 baris = 1 rule)<textarea id="eRules" rows="6"></textarea></label>
+    <label>Larangan khusus (1 baris = 1 poin)<textarea id="eBans" rows="4"></textarea></label>
+    </div><div class="t" data-t="2"><h3>Social Media</h3>
+    <input id="eWeb" placeholder="Website"><input id="eIg" placeholder="Instagram"><input id="eTt" placeholder="Tiktok">
+    <label>Kata penutup<textarea id="eClose" rows="3"></textarea></label>
+    </div><div class="t" data-t="3"><h3>Daftar Pemain</h3><div id="ePl"></div>
+    <button class="btn g" id="addP" style="margin-top:.5rem">+ Tambah Pemain</button></div>
+    <div class="bar">
+      <button class="btn" id="save">💾 Simpan</button>
+      <button class="btn g" id="exp">⬇ Export data.json</button>
+      <button class="btn g" id="imp">⬆ Import</button>
+      <button class="btn g" id="rst">↺ Reset</button>
+      <button class="btn g" id="out">Keluar</button>
+    </div>
+    <input type="file" id="file" accept=".json" hidden>
+    <div id="msg"></div>
+    <p style="color:var(--mut);font-size:.82rem;margin-top:.8rem">Klik Simpan = langsung tampil ke semua pengunjung. Export/Import dipakai untuk backup.</p>
+  </div>
+</div></div>
+
+<script>
+const $=s=>document.querySelector(s);let CR=null;
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const lines=t=>t.split("\n").map(s=>s.trim()).filter(Boolean);
+let D;
+async function load(){
+  try{D=await (await fetch("data.json",{cache:"no-store"})).json()}catch(e){D={name:"DraventhHardcore",tagline:"data.json tidak ditemukan",desc:"",rules:[],bans:[],features:[],social:{},closing:"",players:[]}}
+  try{const r=await fetch("/api/data",{cache:"no-store"});if(r.ok){const x=await r.json();if(x&&x.name)D=x}}catch(e){}
+  render();
+}
+function render(){
+  document.title=D.name+" ⚔";
+  $("#hName").textContent=D.name;$("#fName").textContent=D.name;$("#yr").textContent=new Date().getFullYear();
+  $("#aDesc").textContent=D.desc;$("#close").textContent=D.closing;
+  type($("#hTag"),D.tagline);
+  $("#stats").innerHTML=[["6 MENIT","Waktu bangkit"],[D.players.length,"Total Pemain"],[D.players.filter(p=>p.status=="Online").length,"Online"],[D.players.filter(p=>p.status=="Void").length,"Di Kehampaan"]].map(a=>`<div class="stat"><b>${esc(a[0])}</b><span>${esc(a[1])}</span></div>`).join("");
+  $("#fList").innerHTML=D.features.map(f=>`<div class="card"><i>⟡</i>${esc(f)}</div>`).join("");
+  $("#rList").innerHTML=D.rules.map(r=>`<div class="rule"><em>➥</em>${esc(r)}</div>`).join("");
+  $("#bList").innerHTML=D.bans.map(b=>`<div class="warn">⚠ ${esc(b)}</div>`).join("");
+  const s=D.social||{};
+  $("#sList").innerHTML=[["Website",s.website],["Instagram",s.instagram],["Tiktok",s.tiktok]].map(a=>`<p><b>${a[0]}:</b> ${a[0]=="Website"&&a[1]&&a[1]!="-"?`<a href="https://${esc(a[1].replace(/^https?:\/\//,""))}" target="_blank" rel="noopener">${esc(a[1])}</a>`:esc(a[1]||"-")}</p>`).join("");
+  const c=$("#cip");c.hidden=!D.ip;c.textContent="📋 "+(D.ip||"");c.onclick=()=>{navigator.clipboard?.writeText(D.ip);toast("IP berhasil disalin!")};
+  players();
+}
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2000)}
+let F="Semua";
+function chips(){$("#chips").innerHTML=["Semua","Online","Void","Offline"].map(x=>`<button class="chip${x==F?" on":""}" data-f="${x}">${x=="Void"?"In Void":x}</button>`).join("");document.querySelectorAll("#chips .chip").forEach(b=>b.onclick=()=>{F=b.dataset.f;players()})}
+const st=p=>p.status=="Mati"?"Void":p.status=="Hidup"?"Online":["Online","Void","Offline"].includes(p.status)?p.status:"Offline";
+function players(){
+  const q=$("#q").value.toLowerCase();
+  chips();const l=D.players.filter(p=>p.name.toLowerCase().includes(q)&&(F=="Semua"||st(p)==F));
+  $("#pList").innerHTML=l.length?l.map(p=>`<div class="card pl"><div class="av">${esc(p.name[0]||"?").toUpperCase()}</div><div><b>${esc(p.name)}</b><small>${esc(p.role)}</small></div><span class="tag ${st(p)}">${{Online:"● Online",Void:"☠ In Void",Offline:"○ Offline"}[st(p)]}</span></div>`).join(""):'<p style="color:var(--mut)">Belum ada pemain.</p>';
+}
+$("#q").oninput=players;
+let tt;function type(el,t){clearInterval(tt);el.textContent="";let i=0;tt=setInterval(()=>{el.textContent=t.slice(0,++i);if(i>=t.length)clearInterval(tt)},35)}
+// reveal
+const io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add("on")),{threshold:.08});
+document.querySelectorAll(".rv").forEach(e=>io.observe(e));
+// partikel api
+(function(){const c=$("#fx"),g=c.getContext("2d");let w,h,P=[];
+ const rs=()=>{w=c.width=innerWidth;h=c.height=innerHeight;P=Array.from({length:Math.min(70,w/14|0)},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*2+.5,v:Math.random()*.6+.2,a:Math.random()}))};
+ addEventListener("resize",rs);rs();
+ (function f(){g.clearRect(0,0,w,h);P.forEach(p=>{p.y-=p.v;p.x+=Math.sin(p.y/40)*.3;if(p.y<-5){p.y=h+5;p.x=Math.random()*w}g.fillStyle=`rgba(255,${80+p.a*120|0},60,${p.a*.6})`;g.beginPath();g.arc(p.x,p.y,p.r,0,7);g.fill()});requestAnimationFrame(f)})()})();
+// ADMIN
+async function sha(t){const b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(t));return[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,"0")).join("")}
+function openAdm(){$("#adm").style.display="block";document.body.style.overflow="hidden"}
+function closeAdm(){$("#adm").style.display="none";document.body.style.overflow="";if(location.hash=="#admin")history.replaceState(0,"",location.pathname)}
+$("#gear").onclick=openAdm;$("#x1").onclick=closeAdm;
+if(location.hash=="#admin")openAdm();
+let fails=0;
+$("#go").onclick=async()=>{
+  if(fails>=5){$("#lerr").textContent="Terlalu banyak percobaan. Refresh halaman.";return}
+  const u=$("#u").value.trim(),p=$("#p").value;let r;
+  try{r=await fetch("/api/data",{method:"POST",body:JSON.stringify({action:"login",u,p})})}catch(e){}
+  if(r&&r.ok){CR={u,p};$("#u").value=$("#p").value="";$("#lerr").textContent="";showPanel()}
+  else if(r&&r.status==401){fails++;$("#lerr").textContent="Username atau password salah."}
+  else $("#lerr").textContent="Server belum aktif. Deploy lewat GitHub dulu."
+};
+$("#p").onkeydown=e=>e.key=="Enter"&&$("#go").click();
+function showPanel(){
+  $("#login").hidden=true;$("#panel").hidden=false;
+  $("#eName").value=D.name;$("#eTag").value=D.tagline;$("#eDesc").value=D.desc;
+  $("#eFeat").value=D.features.join("\n");$("#eRules").value=D.rules.join("\n");$("#eBans").value=D.bans.join("\n");
+  $("#eWeb").value=D.social.website||"";$("#eIg").value=D.social.instagram||"";$("#eTt").value=D.social.tiktok||"";$("#eClose").value=D.closing;$("#eIp").value=D.ip||"";tab(0);
+  $("#ePl").innerHTML="";D.players.forEach(addRow);
+}
+function addRow(p={name:"",role:"Member",status:"Offline"}){
+  const r=document.createElement("div");r.className="row";
+  r.innerHTML=`<input placeholder="Nama" value="${esc(p.name)}"><input placeholder="Role" value="${esc(p.role)}"><select>${["Online","Void","Offline"].map(o=>`<option${st(p)==o?" selected":""}>${o}</option>`).join("")}</select><button class="btn g" style="padding:.4rem .8rem">✕</button>`;
+  r.querySelector("button").onclick=()=>r.remove();$("#ePl").appendChild(r);
+}
+function tab(i){document.querySelectorAll(".t").forEach(e=>e.classList.toggle("on",e.dataset.t==i));document.querySelectorAll("#tabs .chip").forEach(e=>e.classList.toggle("on",e.dataset.i==i))}
+document.querySelectorAll("#tabs .chip").forEach(b=>b.onclick=()=>tab(b.dataset.i));
+$("#navA").onclick=e=>{e.preventDefault();openAdm()};
+$("#addP").onclick=()=>addRow();
+function collect(){
+  return{ip:$("#eIp").value.trim(),name:$("#eName").value.trim()||"Server",tagline:$("#eTag").value,desc:$("#eDesc").value,features:lines($("#eFeat").value),rules:lines($("#eRules").value),bans:lines($("#eBans").value),
+  social:{website:$("#eWeb").value.trim(),instagram:$("#eIg").value.trim(),tiktok:$("#eTt").value.trim()},closing:$("#eClose").value,
+  players:[...document.querySelectorAll("#ePl .row")].map(r=>{const i=r.querySelectorAll("input,select");return{name:i[0].value.trim(),role:i[1].value.trim(),status:i[2].value}}).filter(p=>p.name)}
+}
+const say=t=>{$("#msg").textContent=t;setTimeout(()=>$("#msg").textContent="",3500)};
+$("#save").onclick=async()=>{const d=collect();let r;try{r=await fetch("/api/data",{method:"POST",body:JSON.stringify({u:CR.u,p:CR.p,data:d})})}catch(e){}
+if(r&&r.ok){D=d;render();say("✔ Tersimpan untuk semua pengunjung")}else say("Gagal menyimpan ke server")};
+$("#exp").onclick=()=>{D=collect();const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([JSON.stringify(D,null,2)],{type:"application/json"}));a.download="data.json";a.click();say("data.json terunduh, ganti di project lalu deploy")};
+$("#imp").onclick=()=>$("#file").click();
+$("#file").onchange=async e=>{try{const d=JSON.parse(await e.target.files[0].text());if(!d.name)throw 0;D=d;render();showPanel();say("Import berhasil, klik Simpan")}catch(x){say("File tidak valid")}};
+$("#rst").onclick=()=>{if(confirm("Isi ulang form dari data.json bawaan?")){fetch("data.json").then(x=>x.json()).then(d=>{D=d;showPanel();say("Klik Simpan untuk menerapkan")})}};
+$("#out").onclick=()=>{CR=null;$("#panel").hidden=true;$("#login").hidden=false;closeAdm()};
+load();
+</script>
+</body>
+  </html>
+  
